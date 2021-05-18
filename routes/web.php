@@ -20,9 +20,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
 
 Route::group(['prefix'=>'admin', 'as' => 'admin.'], function(){ 
-    Route::get('login', [App\Http\Controllers\Admin\Auth\LoginController::class, 'index']);
     // Route::group(['middleware' => 'auth'], function () {
     //     Route::group(['middleware' => 'is_admin'], function () {
     //         Route::get('', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
