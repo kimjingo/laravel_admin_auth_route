@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\IsAdmin;
+// use App\Http\Middleware\IsAdmin;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,12 +20,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin/login', function(){
+    return view('admin/auth/login');
+})->name('admin.login');
 Route::get('/admin/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
 
 Route::group(['prefix'=>'admin', 'as' => 'admin.'], function(){ 
-    // Route::group(['middleware' => 'auth'], function () {
-    //     Route::group(['middleware' => 'is_admin'], function () {
-    //         Route::get('', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
-    //     });
-    // });
+    Route::group(['middleware' => 'auth'], function () {
+        Route::group(['middleware' => 'is_admin'], function () {
+            Route::get('', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
+        });
+    });
 });
